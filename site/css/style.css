@@ -1,0 +1,875 @@
+/* =====================================================
+   VARIÁVEIS DE COR (root)
+   Nomes curtos para facilitar o uso no resto do arquivo.
+===================================================== */
+:root {
+  --navy: #1d3a62;       /* azul-marinho principal (header, hero, footer) */
+  --navy-dark: #16294a;  /* variação mais escura, usada em hover/gradiente */
+  --blue: #7bb6f2;       /* azul claro de destaque (eyebrows, badges, highlight) */
+  --green: #25d366;      /* verde do botão de WhatsApp */
+  --green-dark: #1fb257; /* verde mais escuro, hover do botão de WhatsApp */
+  --white: #ffffff;
+  --bg: #f5f7fa;         /* cinza clarinho de fundo de section alternada */
+  --text: #333333;       /* texto padrão do corpo */
+  --text-soft: #5b6472;  /* texto secundário (parágrafos de apoio) */
+  --border: #e4e8ee;     /* bordas discretas em cards e inputs */
+  --shadow: 0 8px 24px rgba(29, 58, 98, 0.08);       /* sombra suave padrão dos cards */
+  --shadow-hover: 0 16px 32px rgba(29, 58, 98, 0.14); /* sombra ao passar o mouse */
+  --header-h: 74px;      /* altura do header fixo, usada em vários lugares abaixo */
+}
+
+/* =====================================================
+   RESET E BASE
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* Rolagem suave ao clicar em links do menu que apontam para uma section (#id) */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  background-color: var(--white);
+}
+
+h1, h2, h3 {
+  /* Fonte de título provisória. Sugestões para a escolha final (Google Fonts, grátis):
+       - Títulos: "Libre Baskerville", "Merriweather" ou "Arvo"
+       - Corpo de texto: "Open Sans" ou "Lato" */
+  font-family: "Times New Roman", Times, serif;
+  color: var(--navy);
+  line-height: 1.25;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+.eyebrow {
+  display: inline-block;
+  color: var(--blue);
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+/* Cabeçalho centralizado, usado nas sections onde o título já nasceu centralizado
+   (Serviços, Contato, introdução do Portfólio) — mantido igual em qualquer tela. */
+.section-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px auto;
+}
+
+.section-header p {
+  color: var(--text-soft);
+}
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-whatsapp {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.btn-whatsapp:hover {
+  background-color: var(--green-dark);
+}
+
+.btn-primary {
+  background-color: var(--navy);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--navy-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
+}
+
+.btn-full {
+  width: 100%;
+  justify-content: center;
+  font-size: 16px;
+  padding: 14px 24px;
+}
+
+/* Badge/selo (ex: "Destaque", tags do hero). display:inline-flex faz ele abraçar
+   só o texto — importante quando o pai é um flex column (ver .service-featured-text). */
+.badge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 6px 16px;
+  border: 1px solid var(--blue);
+  border-radius: 999px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+/* =====================================================
+   HEADER
+   Fixo no topo (position: fixed) e com o menu deslocado para a direita
+   (logo fica sozinha à esquerda; nav + botão ficam agrupados à direita).
+===================================================== */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background-color: var(--white);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  height: var(--header-h);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logo-text small {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.logo-text strong {
+  color: var(--navy);
+  font-size: 16px;
+}
+
+/* margin-left: auto empurra o nav (e tudo depois dele) para a direita,
+   deixando só a logo ancorada à esquerda */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-weight: bold;
+  color: var(--navy);
+  margin-left: auto;
+}
+
+/* Checkbox e label do menu mobile ficam escondidos em telas largas */
+.nav-toggle,
+.nav-toggle-label {
+  display: none;
+}
+
+/* Como o header agora é fixo, ele sai do fluxo da página e ficaria por cima do
+   conteúdo. Este espaçador empurra o conteúdo para baixo na altura do header. */
+main {
+  padding-top: var(--header-h);
+}
+
+/* Com o header fixo, rolar até uma section (#id) esconderia o título atrás dele.
+   scroll-margin-top reserva essa folga em cada destino de rolagem. */
+section[id] {
+  scroll-margin-top: var(--header-h);
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+.hero {
+  position: relative;
+  background-color: var(--navy);
+  overflow: hidden;
+  padding: 72px 0;
+}
+
+.hero-shape {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.hero-shape-1 {
+  width: 420px;
+  height: 420px;
+  right: -120px;
+  top: -80px;
+}
+
+.hero-shape-2 {
+  width: 260px;
+  height: 260px;
+  left: -80px;
+  bottom: -100px;
+}
+
+.hero-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 56px;
+}
+
+.hero-text {
+  flex: 1 1 520px;
+}
+
+.hero-text h1 {
+  color: var(--white);
+  font-size: 44px;
+  margin-bottom: 20px;
+}
+
+.hero-text .highlight {
+  color: var(--blue);
+}
+
+.hero-text .lead {
+  color: #cdddf2;
+  font-size: 17px;
+  max-width: 480px;
+}
+
+.hero-image {
+  flex: 1 1 460px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  border: 4px solid rgba(255, 255, 255, 0.15);
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* =====================================================
+   SOBRE
+===================================================== */
+.about {
+  padding: 88px 0;
+}
+
+.about-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+}
+
+.about-image {
+  flex: 1 1 340px;
+}
+
+.about-image img {
+  border-radius: 16px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.about-text {
+  flex: 1 1 480px;
+}
+
+.about-text h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  color: var(--text-soft);
+  margin-bottom: 16px;
+}
+
+.checklist {
+  margin: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.check-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.checklist strong {
+  color: var(--navy);
+}
+
+.about-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* =====================================================
+   SERVIÇOS
+===================================================== */
+.services {
+  padding: 88px 0;
+  background-color: var(--bg);
+}
+
+.service-featured {
+  display: flex;
+  background-color: var(--navy);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.service-featured-text {
+  flex: 1 1 60%;
+  padding: 56px 64px;
+  /* Coluna flex com os filhos alinhados à esquerda (não esticados) e
+     centralizados verticalmente dentro da caixa */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.service-featured-text h3 {
+  color: var(--white);
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.service-featured-text p {
+  color: #cdddf2;
+}
+
+.service-featured-image {
+  flex: 1 1 40%;
+}
+
+.service-featured-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.service-card {
+  flex: 1 1 calc(50% - 12px);
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.service-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+
+.service-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.service-card h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.service-card p {
+  color: var(--text-soft);
+  margin-bottom: 20px;
+}
+
+.service-link {
+  font-weight: bold;
+  color: var(--navy);
+}
+
+/* =====================================================
+   CONTATO
+===================================================== */
+.contact {
+  padding: 88px 0;
+  background-color: var(--bg);
+}
+
+.contact-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.contact-form {
+  flex: 2 1 420px;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: var(--shadow);
+}
+
+.contact-form label {
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 14px;
+  color: var(--navy);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.contact-form button {
+  margin-top: 24px;
+}
+
+.form-feedback {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form-feedback.success {
+  color: var(--green-dark);
+}
+
+.form-feedback.error {
+  color: #d64545;
+}
+
+.contact-side {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-info-card {
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.contact-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: var(--bg);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-info-item small {
+  display: block;
+  color: var(--text-soft);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.contact-info-item strong {
+  color: var(--navy);
+}
+
+.feedback-note {
+  background-color: #eef2f7;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.feedback-note .label {
+  display: block;
+  font-weight: bold;
+  color: var(--navy);
+  font-size: 13px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.feedback-note p {
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+.site-footer {
+  background-color: var(--navy-dark);
+  color: #cdddf2;
+  padding-top: 56px;
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand {
+  flex: 2 1 280px;
+}
+
+.footer-brand p {
+  margin-top: 12px;
+  max-width: 320px;
+}
+
+.footer-col {
+  flex: 1 1 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col h4 {
+  color: var(--blue);
+  font-size: 13px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 14px;
+  color: #93a9c9;
+}
+
+/* =====================================================
+   PÁGINA DE PORTFÓLIO (portfolio.html)
+===================================================== */
+
+/* Faixa de introdução no topo da página, mesma linguagem visual do hero */
+.portfolio-intro {
+  background-color: var(--navy);
+  padding: 64px 0 56px;
+  text-align: center;
+}
+
+.portfolio-intro h1 {
+  color: var(--white);
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.portfolio-intro p {
+  color: #cdddf2;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.portfolio-gallery {
+  padding: 64px 0;
+}
+
+/* Grid "bento": tamanhos de caixa variados em vez de uma grade uniforme,
+   usando flexbox (flex-basis diferente por classe) em vez de CSS grid,
+   para seguir o mesmo padrão de layout do resto do site. */
+.bento-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.bento-item {
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bento-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.bento-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Uma foto grande em destaque */
+.bento-hero {
+  flex: 1 1 64%;
+  height: 420px;
+}
+
+/* Foto de apoio ao lado da foto grande */
+.bento-side {
+  flex: 1 1 32%;
+  height: 420px;
+}
+
+/* Três fotos do mesmo tamanho, lado a lado */
+.bento-third {
+  flex: 1 1 calc(33.333% - 14px);
+  height: 280px;
+}
+
+/* Foto larga, ocupando a linha inteira. object-position prioriza o topo da foto,
+   já que a foto original é vertical e o recorte "cover" cortaria a parte de cima. */
+.bento-wide {
+  flex: 1 1 100%;
+  height: 320px;
+}
+
+.bento-wide img {
+  object-position: top center;
+}
+
+.portfolio-cta {
+  background-color: var(--bg);
+  padding: 64px 0;
+  text-align: center;
+}
+
+.portfolio-cta h2 {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+/* =====================================================
+   RESPONSIVIDADE
+   Só reorganiza o layout (colunas -> pilha, menu -> hambúrguer). O
+   alinhamento de cada elemento continua o mesmo que no desktop — nada
+   é forçado para o centro só por estar numa tela menor.
+===================================================== */
+
+/* Tablets e telas médias: as sections de duas colunas viram uma coluna só */
+@media (max-width: 1024px) {
+  .hero-inner,
+  .about-inner,
+  .contact-grid {
+    flex-direction: column;
+  }
+
+  .hero-image,
+  .about-image {
+    width: 100%;
+  }
+
+  .service-featured {
+    flex-direction: column;
+  }
+
+  .service-featured-image {
+    height: 260px;
+  }
+
+  .bento-hero,
+  .bento-side {
+    flex: 1 1 100%;
+    height: 320px;
+  }
+}
+
+/* Celulares: menu vira hambúrguer (só com checkbox + label, sem JS) e
+   os cards de serviço/portfólio empilham em uma coluna. */
+@media (max-width: 720px) {
+  .header-inner {
+    flex-wrap: wrap;
+    height: auto;
+    row-gap: 12px;
+  }
+
+  /* Nav escondido por padrão, vira um bloco cheio abaixo do header quando aberto */
+  .main-nav {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+    order: 10;
+    margin-left: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-toggle:checked ~ .main-nav {
+    display: flex;
+  }
+
+  /* Ícone de hambúrguer, feito só com 3 barras (margin-bottom em vez de gap,
+     para não depender de suporte a "gap" em flexbox nos navegadores mais antigos) */
+  .nav-toggle-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .nav-toggle-label span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--navy);
+    border-radius: 2px;
+    margin-bottom: 5px;
+  }
+
+  .nav-toggle-label span:last-child {
+    margin-bottom: 0;
+  }
+
+  .header-cta {
+    order: 5;
+  }
+
+  .hero-text h1 {
+    font-size: 32px;
+  }
+
+  .service-card {
+    flex: 1 1 100%;
+  }
+
+  .service-featured-text {
+    padding: 40px 28px;
+  }
+
+  .bento-third {
+    flex: 1 1 100%;
+    height: 260px;
+  }
+}
