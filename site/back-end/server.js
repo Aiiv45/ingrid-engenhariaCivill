@@ -1,3 +1,4 @@
+require('dotenv').config(); // ativa o .env
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -12,8 +13,8 @@ app.use(express.json()); // ENSINA O EXPRESS A INTERPRETAR O JSON E TRANSFORMA E
 const transporter = nodemailer.createTransport({ 
     service: 'gmail', 
     auth: { 
-        user: '', // E-MAIL QUE VAI DISPARAR AS MENSAGENS
-        pass: '' // SENHA DE APLICATIVO GERADA PELO GOOGLE
+        user: process.env.GMAIL_USER, // E-MAIL QUE VAI DISPARAR AS MENSAGENS
+        pass: process.env.GMAIL_PASS // SENHA DE APLICATIVO GERADA PELO GOOGLE
     } 
 });
 
@@ -33,7 +34,7 @@ app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUI
         }
 
         // VALIDAÇÃO DO FORMATO DO E-MAIL POR EXPRESSÃO REGULAR
-        const regexEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regexEmail.test(email.trim())) {  // TESTE SE O EMAIL ESTA NO PADRÃO 
             return res.status(400).json({ 
                 sucesso: false, 
@@ -49,8 +50,8 @@ app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUI
         console.log('Dados validados com sucesso:', { nomeLimpo, emailLimpo, servicoLimpo, mensagemLimpa });
 
         await transporter.sendMail({
-            from: '"Novo formulário recebido!!" <seuemail@gmail.com>',
-            to: '', // QUEM VAI RECEBER OS AVISOS
+            from: `"Novo formulário recebido!!" <${process.env.GMAIL_USER}>`,
+            to: process.env.EMAIL_DE_DESTINO, // QUEM VAI RECEBER OS AVISOS
             replyTo: emailLimpo,                                 // E-MAIL DO CLIENTE QUE PREENCHEU O FORMULÁRIO
             subject: `🚨 Novo Orçamento: ${servicoLimpo}`,
             html: `
@@ -75,7 +76,7 @@ app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUI
     }
 });
 
-const PORTA = 3000;
+const PORTA = process.env.PORTA || 3000;
 
 app.listen(PORTA, () => { // ".listen()" LIGA O SERVER E DEIXA PREPARADO PARA QUALQUER REQUISIÇÃO HTTP
   console.log(` Servidor rodando em http://localhost:${PORTA}`);
