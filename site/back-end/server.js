@@ -12,8 +12,8 @@ app.use(express.json()); // ENSINA O EXPRESS A INTERPRETAR O JSON E TRANSFORMA E
 const transporter = nodemailer.createTransport({ 
     service: 'gmail', 
     auth: { 
-        user: '', // O e-mail que vai disparar as mensagens 
-        pass: '' // Senha de aplicativo gerada no Google 
+        user: '', // E-MAIL QUE VAI DISPARAR AS MENSAGENS
+        pass: '' // SENHA DE APLICATIVO GERADA PELO GOOGLE
     } 
 });
 
@@ -21,19 +21,44 @@ app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUI
 
     try {
         const { nome, email, servico, mensagem } = req.body;
-        // SALVAR DADOS
-        console.log('Dados recebidos:', { nome, email, servico, mensagem });
+
+        // VALIDAÇÃO DE CAMPOS OBRIGATORIOS
+        if (!nome || !nome.trim() ||  
+            !email || !email.trim() || 
+            !servico || !servico.trim() || !mensagem || !mensagem.trim()) { 
+            return res.status(400).json({ 
+                sucesso: false, 
+                erro: 'Todos os campos (nome, e-mail, serviço e mensagem) devem ser preenchidos.'
+            }); // HTTP 400: BAD REQUEST; JSON DE ERRO
+        }
+
+        // VALIDAÇÃO DO FORMATO DO E-MAIL POR EXPRESSÃO REGULAR
+        const regexEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+        if (!regexEmail.test(email.trim())) {  // TESTE SE O EMAIL ESTA NO PADRÃO 
+            return res.status(400).json({ 
+                sucesso: false, 
+                erro: 'Por favor, insira um endereço de e-mail válido.' 
+            }); // HTTP 400: BAD REQUEST; JSON DE ERRO
+        }
+        
+        // SALVAR DADOS EM VARIAVEIS LIMPAS SEM ESPAÇAMENTO(.TRIM() FAZ ESSE PAPEL)
+        const nomeLimpo = nome.trim(); 
+        const emailLimpo = email.trim(); 
+        const servicoLimpo = servico.trim(); 
+        const mensagemLimpa = mensagem.trim(); 
+        console.log('Dados validados com sucesso:', { nomeLimpo, emailLimpo, servicoLimpo, mensagemLimpa });
+
         await transporter.sendMail({
             from: '"Novo formulário recebido!!" <seuemail@gmail.com>',
-            to: '', // Quem vai receber os avisos
-            replyTo: email,                                 // E-mail do cliente que preencheu o formulário
-            subject: `🚨 Novo Orçamento: ${servico}`,
+            to: '', // QUEM VAI RECEBER OS AVISOS
+            replyTo: emailLimpo,                                 // E-MAIL DO CLIENTE QUE PREENCHEU O FORMULÁRIO
+            subject: `🚨 Novo Orçamento: ${servicoLimpo}`,
             html: `
                 <h2>Novo formulário recebido pelo site!</h2>
-                <p><strong>Nome:</strong> ${nome}</p>
-                <p><strong>E-mail:</strong> ${email}</p>
-                <p><strong>Serviço Solicitado:</strong> ${servico}</p>
-                <p><strong>Mensagem:</strong> ${mensagem}</p>`
+                <p><strong>Nome:</strong> ${nomeLimpo}</p>
+                <p><strong>E-mail:</strong> ${emailLimpo}</p>
+                <p><strong>Serviço Solicitado:</strong> ${servicoLimpo}</p>
+                <p><strong>Mensagem:</strong> ${mensagemLimpa}</p>`
     });
         // CONFIRMAR QUE FORAM SALVOS
         return res.status(201).json({
