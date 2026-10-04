@@ -408,7 +408,7 @@ section[id] {
 
 .service-featured-text {
   flex: 1 1 60%;
-  padding: 56px 64px;
+  padding: 40px 48px;
   /* Coluna flex com os filhos alinhados à esquerda (não esticados) e
      centralizados verticalmente dentro da caixa */
   display: flex;
@@ -419,21 +419,24 @@ section[id] {
 
 .service-featured-text h3 {
   color: var(--white);
-  font-size: 28px;
-  margin-bottom: 16px;
+  font-size: 24px;
+  margin-bottom: 12px;
 }
 
 .service-featured-text p {
   color: #cdddf2;
+  font-size: 15px;
 }
 
 .service-featured-image {
   flex: 1 1 40%;
+  max-height: 260px;
 }
 
 .service-featured-image img {
   width: 100%;
   height: 100%;
+  max-height: 260px;
   object-fit: cover;
 }
 
@@ -496,11 +499,13 @@ section[id] {
 .contact-grid {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   gap: 24px;
 }
 
 .contact-form {
-  flex: 2 1 420px;
+  flex: 3 1 480px;
+  margin: 0 auto;
   background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -677,19 +682,22 @@ section[id] {
 ===================================================== */
 
 /* Faixa de introdução no topo da página, mesma linguagem visual do hero */
-.portfolio-intro {
+.portfolio-intro,
+.partners-intro {
   background-color: var(--navy);
   padding: 64px 0 56px;
   text-align: center;
 }
 
-.portfolio-intro h1 {
+.portfolio-intro h1,
+.partners-intro h1 {
   color: var(--white);
   font-size: 38px;
   margin-bottom: 12px;
 }
 
-.portfolio-intro p {
+.portfolio-intro p,
+.partners-intro p {
   color: #cdddf2;
   max-width: 560px;
   margin: 0 auto;
@@ -709,6 +717,7 @@ section[id] {
 }
 
 .bento-item {
+  position: relative;
   overflow: hidden;
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -724,6 +733,71 @@ section[id] {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+/* Checkbox escondido que guarda o estado "legenda aberta" de cada foto */
+.caption-toggle {
+  display: none;
+}
+
+/* O label cobre a foto inteira e é o que recebe o clique/toque */
+.caption-trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* Selo discreto com "i", só para indicar que a foto pode ser clicada */
+.caption-trigger::before {
+  content: "i";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(29, 58, 98, 0.55);
+  color: var(--white);
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  z-index: 2;
+  transition: opacity 0.2s ease;
+}
+
+/* Legenda escondida por padrão, com gradiente para o texto ficar legível
+   sobre qualquer foto */
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 28px 16px 12px;
+  background: linear-gradient(to top, rgba(22, 41, 74, 0.88), rgba(22, 41, 74, 0));
+  color: var(--white);
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+/* Legenda aparece ao marcar o checkbox (clique/toque na foto); o selo "i" some */
+.caption-toggle:checked ~ .caption-trigger .caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.caption-toggle:checked ~ .caption-trigger::before {
+  opacity: 0;
 }
 
 /* Uma foto grande em destaque */
@@ -767,6 +841,133 @@ section[id] {
 }
 
 /* =====================================================
+   PÁGINA DE PARCERIAS (parcerias.html)
+===================================================== */
+.partners-gallery {
+  padding: 64px 0 80px;
+  background-color: var(--bg);
+}
+
+.partners-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+/* Cada parceiro em um cartão branco com uma faixa colorida no topo —
+   é esse detalhe que diferencia o cartão do resto do site sem perder a
+   mesma linguagem visual (cores, sombra, cantos arredondados) */
+.partner-card {
+  flex: 1 1 calc(33.333% - 16px);
+  position: relative;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 28px 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.partner-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--blue);
+}
+
+.partner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Caixa de tamanho fixo para a logo, "object-fit: contain" porque cada
+   parceiro manda a logo em um formato/fundo diferente */
+.partner-logo {
+  width: 100%;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.partner-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.partner-tag {
+  background-color: rgba(123, 182, 242, 0.16);
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.partner-name {
+  font-size: 18px;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.partner-role {
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+/* Vaga para futura parceria: borda tracejada e sem a faixa colorida,
+   para convidar (sem imitar) os cartões já firmados */
+.partner-card-future {
+  border: 2px dashed var(--border);
+  box-shadow: none;
+  text-decoration: none;
+  cursor: pointer;
+  justify-content: center;
+  min-height: 220px;
+}
+
+.partner-card-future::before {
+  display: none;
+}
+
+.partner-card-future:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
+
+.partner-future-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--blue);
+  color: var(--blue);
+  font-size: 26px;
+  line-height: 44px;
+  text-align: center;
+  margin-bottom: 16px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.partner-card-future:hover .partner-future-icon {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+/* =====================================================
    RESPONSIVIDADE
    Só reorganiza o layout (colunas -> pilha, menu -> hambúrguer). O
    alinhamento de cada elemento continua o mesmo que no desktop — nada
@@ -798,6 +999,10 @@ section[id] {
   .bento-side {
     flex: 1 1 100%;
     height: 320px;
+  }
+
+  .partner-card {
+    flex: 1 1 calc(50% - 12px);
   }
 }
 
@@ -852,12 +1057,24 @@ section[id] {
     margin-bottom: 0;
   }
 
+  /* Botão "Pedir Orçamento" some no mobile; o contato continua acessível
+     pelo menu e pela section de contato */
   .header-cta {
-    order: 5;
+    display: none;
   }
 
   .hero-text h1 {
     font-size: 32px;
+  }
+
+  .hero-image img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .about-image img,
+  .service-featured-image,
+  .service-featured-image img {
+    max-height: 200px;
   }
 
   .service-card {
@@ -865,11 +1082,26 @@ section[id] {
   }
 
   .service-featured-text {
-    padding: 40px 28px;
+    padding: 32px 24px;
   }
 
   .bento-third {
     flex: 1 1 100%;
-    height: 260px;
+    height: 220px;
+  }
+
+  .partner-card {
+    flex: 1 1 100%;
+  }
+
+  .bento-hero,
+  .bento-side,
+  .bento-wide {
+    height: 220px;
+  }
+
+  .contact-form {
+    flex: 1 1 100%;
+    padding: 28px 24px;
   }
 }

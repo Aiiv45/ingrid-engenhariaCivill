@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfólio | Ingrid Pascoal - Engenheira Civil</title>
+  <title>Parcerias | Ingrid Pascoal - Engenheira Civil</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -25,8 +25,8 @@
       <nav class="main-nav">
         <a href="index.html#sobre">Sobre</a>
         <a href="index.html#servicos">Serviços</a>
-        <a href="portfolio.html" aria-current="page">Portfólio</a>
-        <a href="parcerias.html">Parcerias</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="parcerias.html" aria-current="page">Parcerias</a>
         <a href="index.html#contato">Contato</a>
       </nav>
 
@@ -47,82 +47,54 @@
   <main>
 
     <!-- ===================== INTRODUÇÃO DA PÁGINA ===================== -->
-    <section class="portfolio-intro">
+    <section class="partners-intro">
       <div class="container">
-        <span class="eyebrow">Trabalhos realizados</span>
-        <h1>Portfólio</h1>
-        <p>Registros fotográficos de vistorias e laudos realizados em imóveis de Salvador e região metropolitana.</p>
+        <span class="eyebrow">Quem confia no meu trabalho</span>
+        <h1>Parcerias</h1>
+        <p>Empresas e profissionais com quem já tenho contrato de parceria firmado para indicação e prestação de serviços.</p>
       </div>
     </section>
 
-    <!-- ===================== GALERIA (grid "bento", tamanhos variados) ===================== -->
-    <section class="portfolio-gallery">
+    <!-- ===================== GRID DE PARCEIROS ===================== -->
+    <section class="partners-gallery">
       <div class="container">
-        <!--
-          Cada foto usa um checkbox escondido + label para revelar a legenda ao
-          clicar/tocar, sem depender de JavaScript (mesma técnica do menu
-          hambúrguer). Funciona igual em desktop (clique) e mobile (toque).
-        -->
-        <div class="bento-grid">
+        <div class="partners-grid">
 
-          <figure class="bento-item bento-hero">
-            <input type="checkbox" id="legenda-1" class="caption-toggle">
-            <label for="legenda-1" class="caption-trigger">
-              <img src="images/portfolio-1.jpeg" alt="Vistoria de imóvel novo">
-              <figcaption class="caption">Vistoria de imóvel novo</figcaption>
-            </label>
-          </figure>
+          <div class="partner-card">
+            <div class="partner-logo">
+              <img src="images/parceria-ivone-nonato.jpg" alt="Logo Ivone Nonato - Engenheira Civil">
+            </div>
+            <span class="partner-tag">Parceria firmada</span>
+            <strong class="partner-name">Ivone Nonato</strong>
+            <small class="partner-role">Engenheira Civil</small>
+          </div>
 
-          <figure class="bento-item bento-side">
-            <input type="checkbox" id="legenda-2" class="caption-toggle">
-            <label for="legenda-2" class="caption-trigger">
-              <img src="images/portfolio-2.jpeg" alt="Medição do imóvel para cadastro na prefeitura">
-              <figcaption class="caption">Medição do imóvel para cadastro na prefeitura</figcaption>
-            </label>
-          </figure>
+          <div class="partner-card">
+            <div class="partner-logo">
+              <img src="images/parceria-msb.webp" alt="Logo MSB Serviços LTDA">
+            </div>
+            <span class="partner-tag">Parceria firmada</span>
+            <strong class="partner-name">MSB Serviços</strong>
+            <small class="partner-role">MSB Serviços LTDA</small>
+          </div>
 
-          <figure class="bento-item bento-third">
-            <input type="checkbox" id="legenda-3" class="caption-toggle">
-            <label for="legenda-3" class="caption-trigger">
-              <img src="images/portfolio-3.jpeg" alt="Orçamentos">
-              <figcaption class="caption">Orçamentos</figcaption>
-            </label>
-          </figure>
-
-          <figure class="bento-item bento-third">
-            <input type="checkbox" id="legenda-4" class="caption-toggle">
-            <label for="legenda-4" class="caption-trigger">
-              <img src="images/portfolio-4.jpeg" alt="Vistoria de imóvel novo">
-              <figcaption class="caption">Vistoria de imóvel novo</figcaption>
-            </label>
-          </figure>
-
-          <figure class="bento-item bento-third">
-            <input type="checkbox" id="legenda-5" class="caption-toggle">
-            <label for="legenda-5" class="caption-trigger">
-              <img src="images/portfolio-5.jpeg" alt="Vistoria de imóvel novo">
-              <figcaption class="caption">Vistoria de imóvel novo</figcaption>
-            </label>
-          </figure>
-
-          <figure class="bento-item bento-wide">
-            <input type="checkbox" id="legenda-6" class="caption-toggle">
-            <label for="legenda-6" class="caption-trigger">
-              <img src="images/portfolio-6.jpeg" alt="Avaliação de imóvel">
-              <figcaption class="caption">Avaliação de imóvel</figcaption>
-            </label>
-          </figure>
+          <!-- Espaço reservado para a próxima parceria, com visual propositalmente
+               diferente (borda tracejada) para convidar novos parceiros a entrar em contato -->
+          <a href="index.html#contato" class="partner-card partner-card-future">
+            <span class="partner-future-icon" aria-hidden="true">+</span>
+            <strong class="partner-name">Sua empresa aqui</strong>
+            <small class="partner-role">Vamos fechar uma parceria?</small>
+          </a>
 
         </div>
-
       </div>
     </section>
 
     <!-- ===================== CHAMADA PARA CONTATO ===================== -->
     <section class="portfolio-cta">
       <div class="container">
-        <h2>Quer um trabalho como esse no seu imóvel?</h2>
-        <a href="index.html#contato" class="btn btn-primary">Solicitar orçamento</a>
+        <h2>Quer ser meu próximo parceiro?</h2>
+        <a href="index.html#contato" class="btn btn-primary">Falar com Ingrid</a>
       </div>
     </section>
 
