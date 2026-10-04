@@ -982,9 +982,32 @@ section[id] {
     flex-direction: column;
   }
 
+  /* Em coluna o eixo principal do flex passa a ser vertical, então o
+     "flex-basis" que cada um tinha (pensado como LARGURA no desktop)
+     passaria a valer como ALTURA aqui — por isso zera para "auto" e deixa
+     a altura ser só o conteúdo, senão sobra um vão vazio enorme entre os
+     blocos */
+  .hero-text,
+  .hero-image,
+  .about-text,
+  .about-image,
+  .contact-form,
+  .contact-side {
+    flex: 1 1 auto;
+  }
+
   .hero-image,
   .about-image {
     width: 100%;
+  }
+
+  /* .contact-grid tinha "align-items: flex-start" (pensado pro desktop, onde
+     os filhos têm larguras diferentes de propósito); em coluna isso faz o
+     formulário encolher e colar na esquerda em vez de ocupar a largura
+     toda. "stretch" faz ele (e a caixa de contato ao lado) preencherem
+     a largura do container e ficarem centralizados por conta própria. */
+  .contact-grid {
+    align-items: stretch;
   }
 
   .service-featured {
@@ -1067,11 +1090,37 @@ section[id] {
     font-size: 32px;
   }
 
-  .hero-image img {
-    aspect-ratio: 16 / 10;
+  /* Gap menor entre texto e imagem no mobile (no desktop os 56px formam uma
+     coluna só, e no celular isso deixava um vão grande entre os dois) */
+  .hero-inner {
+    gap: 24px;
   }
 
-  .about-image img,
+  .about-inner {
+    gap: 24px;
+    align-items: center;
+  }
+
+  /* Imagem do hero menor e centralizada, em vez de ocupar a largura toda */
+  .hero-image img {
+    max-width: 75%;
+    margin: 0 auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Imagem "Quem é" menor, mas sem recorte forçado — mantém a proporção
+     original da foto em vez de cortar com object-fit + altura fixa */
+  .about-image {
+    max-width: 70%;
+    margin: 0 auto 8px;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: auto;
+    object-fit: initial;
+  }
+
   .service-featured-image,
   .service-featured-image img {
     max-height: 200px;
@@ -1100,8 +1149,15 @@ section[id] {
     height: 220px;
   }
 
+  /* Menos espaço nas laterais do container só na section de contato, para
+     a caixa do formulário ganhar mais largura e não ficar "achatada" */
+  .contact .container {
+    padding: 0 12px;
+  }
+
   .contact-form {
-    flex: 1 1 100%;
-    padding: 28px 24px;
+    width: 100%;
+    margin: 0;
+    padding: 28px 20px;
   }
 }
