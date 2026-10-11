@@ -610,6 +610,37 @@ section[id] {
   color: var(--navy);
 }
 
+/* Link de texto puro (sem aparência de botão) para o Instagram, usado no
+   card de contato e no rodapé. A cor vem do elemento onde está (currentColor),
+   então funciona igual sobre fundo claro (navy) e escuro (footer). */
+.ig-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Linha embaixo do texto, começa com largura 0 e "cresce" da esquerda pra
+   direita. :active cobre o clique/toque (ainda visível porque o link abre
+   em nova aba, então a página atual não some), :hover cobre o mouse parado
+   em cima, e :focus-visible cobre quem navega pelo teclado. */
+.ig-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.25s ease;
+}
+
+.ig-link:hover::after,
+.ig-link:active::after,
+.ig-link:focus-visible::after {
+  width: 100%;
+}
+
 .feedback-note {
   background-color: #eef2f7;
   border-radius: 16px;
