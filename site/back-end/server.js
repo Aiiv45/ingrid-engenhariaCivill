@@ -76,7 +76,7 @@ app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUI
     }
 });
 
-const PORTA = process.env.PORTA || 3000;
+const PORTA = process.env.PORT || process.env.PORTA || 3000; // Hostinger injeta a porta certa em process.env.PORT
 
 app.listen(PORTA, () => { // ".listen()" LIGA O SERVER E DEIXA PREPARADO PARA QUALQUER REQUISIÇÃO HTTP
   console.log(` Servidor rodando em http://localhost:${PORTA}`);
