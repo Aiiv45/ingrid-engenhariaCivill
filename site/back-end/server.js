@@ -11,11 +11,14 @@ app.use(cors()); // ATIVANDO O CORS
 app.use(express.json()); // ENSINA O EXPRESS A INTERPRETAR O JSON E TRANSFORMA EM UM OBJETO JAVASCRIPT
 
 const transporter = nodemailer.createTransport({ 
-    service: 'gmail', 
-    auth: { 
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
         user: process.env.GMAIL_USER, // E-MAIL QUE VAI DISPARAR AS MENSAGENS
         pass: process.env.GMAIL_PASS // SENHA DE APLICATIVO GERADA PELO GOOGLE
-    } 
+    },
+    family: 4,   // força IPv4
 });
 
 app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUISIÇÕES POST; "async" MARCA A FUNÇÃO COMO ASSINCRONA; "req" GUARDA OS DADOS DO FRONT; "res" OBJETO UTILIZADO PARA RESPONDER O FRONT COM UM CODIGO STATUS HTTP E UM JSON DE CONFIRMAÇÃO
