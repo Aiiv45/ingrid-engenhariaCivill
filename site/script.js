@@ -19,7 +19,7 @@ formContato.addEventListener('submit', async (event) => {
     
     try { 
         // 4. Envia para a sua API rodando no computador 
-        const resposta = await fetch('/api/contato', { 
+        const resposta = await fetch('https://ingrid-engenhariacivill.onrender.com/api/contato', { 
             method: 'POST', 
             headers: { 
                 'Content-Type': 'application/json' 
