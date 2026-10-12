@@ -1,8 +1,8 @@
 require('dotenv').config(); // ativa o .env
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
-// IMPORTAÇÃO DAS BIBLIOTECAS E GUARDA EM EM VARIAVEL CONSTANTE
+const { Resend } = require('resend');
+// IMPORTAÇÃO DAS BIBLIOTECAS E GUARDA EM VARIAVEL CONSTANTE
 
 const app = express();
 // CRIAÇÃO DA APLICAÇÃO EXPRESS E GUARDAMOS ELA EM APP
@@ -10,16 +10,8 @@ const app = express();
 app.use(cors()); // ATIVANDO O CORS
 app.use(express.json()); // ENSINA O EXPRESS A INTERPRETAR O JSON E TRANSFORMA EM UM OBJETO JAVASCRIPT
 
-const transporter = nodemailer.createTransport({ 
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.GMAIL_USER, // E-MAIL QUE VAI DISPARAR AS MENSAGENS
-        pass: process.env.GMAIL_PASS // SENHA DE APLICATIVO GERADA PELO GOOGLE
-    },
-    family: 4,   // força IPv4
-});
+// INICIALIZA O CLIENTE DO RESEND COM A API KEY (vem do .env / Render)
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUISIÇÕES POST; "async" MARCA A FUNÇÃO COMO ASSINCRONA; "req" GUARDA OS DADOS DO FRONT; "res" OBJETO UTILIZADO PARA RESPONDER O FRONT COM UM CODIGO STATUS HTTP E UM JSON DE CONFIRMAÇÃO
 
@@ -52,10 +44,11 @@ app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUI
         const mensagemLimpa = mensagem.trim(); 
         console.log('Dados validados com sucesso:', { nomeLimpo, emailLimpo, servicoLimpo, mensagemLimpa });
 
-        await transporter.sendMail({
-            from: `"Novo formulário recebido!!" <${process.env.GMAIL_USER}>`,
-            to: process.env.EMAIL_DE_DESTINO, // QUEM VAI RECEBER OS AVISOS
-            replyTo: emailLimpo,                                 // E-MAIL DO CLIENTE QUE PREENCHEU O FORMULÁRIO
+        // ENVIO VIA RESEND (API HTTP — não sofre bloqueio de SMTP do Render)
+        const { data, error } = await resend.emails.send({
+            from: 'Site Ingrid Engenharia <contato@pascoaleng.com.br>',              // ← obrigatório no plano free
+            to: process.env.EMAIL_DE_DESTINO,           // QUEM VAI RECEBER OS AVISOS
+            replyTo: emailLimpo,                        // E-MAIL DO CLIENTE QUE PREENCHEU O FORMULÁRIO
             subject: `🚨 Novo Orçamento: ${servicoLimpo}`,
             html: `
                 <h2>Novo formulário recebido pelo site!</h2>
@@ -63,8 +56,18 @@ app.post('/api/contato', async (req, res) => { // ".post()" METODO PARA AS REQUI
                 <p><strong>E-mail:</strong> ${emailLimpo}</p>
                 <p><strong>Serviço Solicitado:</strong> ${servicoLimpo}</p>
                 <p><strong>Mensagem:</strong> ${mensagemLimpa}</p>`
-    });
-        // CONFIRMAR QUE FORAM SALVOS
+        });
+
+        // TRATA ERRO RETORNADO PELO RESEND
+        if (error) {
+            console.error('Erro retornado pelo Resend:', error);
+            return res.status(500).json({
+                sucesso: false,
+                erro: 'Erro interno no servidor.'
+            });
+        }
+
+        console.log('E-mail enviado com sucesso. ID:', data.id);
         return res.status(201).json({
             sucesso: true,
             mensagem: 'Formulário recebido com sucesso!' });
